@@ -1,0 +1,27 @@
+[project]
+name = "mjcf-workbench"
+version = "0.1.0"
+description = "Local MJCF geometry and articulation editor"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "python-multipart",
+    "mujoco>=3.15,<3.16",
+    "numpy",
+    "scipy",
+    "trimesh",
+    "pillow",
+    "mapbox-earcut",
+    "lxml",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "httpx2>=2.13.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = [".agents/tests"]
+pythonpath = ["."]

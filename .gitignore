@@ -1,0 +1,11 @@
+.venv/
+node_modules/
+frontend/dist/
+__pycache__/
+.pytest_cache/
+.runtime/
+*.pyc
+playwright-report/
+test-results/
+*.tsbuildinfo
+MUJOCO_LOG.TXT

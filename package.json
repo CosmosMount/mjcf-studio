@@ -1,0 +1,14 @@
+{
+  "name": "mjcf-studio",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=mjcf-workbench-ui",
+    "test:e2e": "playwright test -c frontend/playwright.config.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0"
+  }
+}
