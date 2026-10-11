@@ -1,0 +1,21 @@
+<mujoco model="闭环与肌腱实验台">
+  <compiler angle="radian"/>
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+  <default><joint damping="0.3" armature="0.01"/><geom density="1200" contype="0" conaffinity="0"/></default>
+  <worldbody>
+    <light name="key_light" pos="1 -2 4"/>
+    <geom name="ground" type="plane" size="2 2 .1" rgba=".17 .2 .25 1"/>
+    <body name="pedestal" pos="0 0 .1"><geom name="base" type="box" size=".36 .16 .1" rgba=".22 .27 .34 1"/>
+      <body name="left" pos="-.25 0 .12"><joint name="left_hinge" axis="0 1 0" range="-1.2 1.2"/><geom name="left_link" type="box" pos="0 0 .2" size=".04 .04 .2" rgba=".31 .68 .67 1"/><site name="left_tip" pos="0 0 .4" size=".012"/>
+        <body name="coupler" pos="0 0 .4"><joint name="coupler_hinge" axis="0 1 0"/><geom name="coupler_bar" type="box" pos=".25 0 0" size=".25 .03 .03" rgba=".82 .69 .42 1"/><site name="coupler_tip" pos=".5 0 0" size=".012"/></body>
+      </body>
+      <body name="right" pos=".25 0 .12"><joint name="right_hinge" axis="0 1 0" range="-1.2 1.2"/><geom name="right_link" type="box" pos="0 0 .2" size=".04 .04 .2" rgba=".31 .68 .67 1"/><site name="right_tip" pos="0 0 .4" size=".012"/></body>
+    </body>
+    <body name="gimbal" pos=".7 0 .3"><joint name="gimbal_x" axis="1 0 0"/><joint name="gimbal_y" axis="0 1 0"/><geom name="gimbal_box" type="box" size=".08 .08 .08" rgba=".6 .45 .75 1"/><site name="gimbal_site" pos="0 0 .1"/></body>
+  </worldbody>
+  <equality><connect name="loop" site1="coupler_tip" site2="right_tip"/><joint name="parallel" joint1="left_hinge" joint2="right_hinge" polycoef="0 1 0 0 0"/></equality>
+  <tendon><fixed name="differential"><joint joint="left_hinge" coef="1"/><joint joint="right_hinge" coef="-1"/></fixed><spatial name="cable" width=".005"><site site="left_tip"/><site site="right_tip"/></spatial></tendon>
+  <actuator><motor name="left_motor" joint="left_hinge" ctrlrange="-1 1"/><motor name="coupled_motor" tendon="differential" ctrlrange="-1 1"/></actuator>
+  <sensor><jointpos name="left_position" joint="left_hinge"/><tendonpos name="cable_length" tendon="cable"/></sensor>
+  <keyframe><key name="home" qpos="0 0 0 0 0" ctrl="0 0"/></keyframe>
+</mujoco>
